@@ -25,13 +25,19 @@ const LoginPage = () => {
 
       <Box
         width={isNonMobileScreens ? "50%" : "90%"}
-        p={"2rem"}
+        p={"2rem 3rem"}
         m={"2rem auto"}
         borderRadius={"1.5rem"}
         bgcolor={theme.palette.background.alt}
       >
-        <Typography fontWeight={"400"} variant="h4" sx={{marginBottom: "1.5rem"}} textAlign={"center"}>
-            Welcome to Whisper, the peaceful and less dramatic social media 
+        <Typography
+          fontWeight={"400"}
+          variant="h4"
+          sx={{ marginBottom: "1.5rem" }}
+          textAlign={"center"}
+        >
+          Welcome to Whisper, the more peaceful and less dramatic social media
+          app
         </Typography>
 
         <Form />
