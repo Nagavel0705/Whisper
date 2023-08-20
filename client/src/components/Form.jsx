@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import FlexBetween from "./FlexBetween";
+import { setLogin } from "state";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -57,7 +58,59 @@ export default function Form() {
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
 
-  const handleFormSubmit = async (values, onSubmitProps) => {};
+  const register = async (values, onSubmitProps) => {
+    // Provides a way to easily construct a set of key/value pairs representing form fields and their values
+    const formData = new FormData();
+
+    for (let value in values) {
+      formData.append(value, values[value]);
+    }
+
+    formData.append("picturePath", values.picture.name);
+
+    const savedUserResponse = await fetch(
+      "http://localhost:3001/auth/register",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const savedUser = await savedUserResponse.json();
+
+    onSubmitProps.resetForm();
+
+    if (savedUser) {
+      setPageType("login");
+    }
+  };
+
+  const login = async (values, onSubmitProps) => {
+    const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+
+    const loggedIn = await loggedInResponse.json();
+    onSubmitProps.resetForm();
+
+    if (loggedIn) {
+      dispatch(
+        setLogin({
+          user: loggedIn.user,
+          token: loggedIn.token,
+        })
+      );
+    }
+
+    navigate("/home");
+  };
+
+  const handleFormSubmit = async (values, onSubmitProps) => {
+    if (isLogin) await login(values, onSubmitProps);
+    if (isRegister) await register(values, onSubmitProps);
+  };
 
   return (
     <Formik
@@ -192,6 +245,7 @@ export default function Form() {
               }}
             />
             <TextField
+              type="password"
               label="Password"
               onBlur={handleBlur}
               onChange={handleChange}
@@ -215,23 +269,28 @@ export default function Form() {
                 p: "1rem",
                 backgroundColor: palette.primary.main,
                 color: palette.background.alt,
-                "&: hover": { color: palette.primary.main }
+                "&: hover": { color: palette.primary.main },
               }}
             >
               {isLogin ? "LOGIN" : "REGISTER"}
             </Button>
             <Typography
-              onClick={() => {}}
+              onClick={() => {
+                setPageType(isLogin ? "register" : "login");
+                resetForm();
+              }}
               sx={{
                 textDecoration: "underline",
                 color: palette.primary.main,
                 "&: hover": {
                   cursor: "pointer",
-                  color: palette.primary.light
-                }
+                  color: palette.primary.light,
+                },
               }}
             >
-              {isLogin ? "Don't have an account? Sign Up here" : "Already have an account? Login here"}
+              {isLogin
+                ? "Don't have an account? Sign Up here"
+                : "Already have an account? Login here"}
             </Typography>
           </Box>
         </form>

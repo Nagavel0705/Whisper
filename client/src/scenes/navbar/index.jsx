@@ -43,7 +43,7 @@ const Navbar = () => {
 
   const alt = theme.palette.background.alt;
 
-  // const fullName = `${user.firstName} ${user.lastName}`;
+  const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
     <FlexBetween p={"1rem 6%"} bgcolor={alt}>
@@ -92,15 +92,11 @@ const Navbar = () => {
           <IconButton>
             <Help />
           </IconButton>
-          <FormControl
-            variant="standard"
-            // value={fullName}
-          >
+          <FormControl variant="standard" value={fullName}>
             <Select
-              value="Nagavel"
+              value={fullName}
               sx={{
                 bgcolor: neutralLight,
-                width: "150px",
                 borderRadius: "0.25rem",
                 p: "0.25rem 1rem",
                 "& .MuiSvgIcon-root": {
@@ -113,10 +109,8 @@ const Navbar = () => {
               }}
               input={<InputBase />}
             >
-              <MenuItem
-              // value={fullName}
-              >
-                <Typography>Nagavel</Typography>
+              <MenuItem value={fullName}>
+                <Typography>{fullName}</Typography>
               </MenuItem>
               <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
             </Select>
@@ -163,15 +157,11 @@ const Navbar = () => {
             <IconButton>
               <Help />
             </IconButton>
-            <FormControl
-              variant="standard"
-              // value={fullName}
-            >
+            <FormControl variant="standard" value={fullName}>
               <Select
-                value="Nagavel"
+                value={fullName}
                 sx={{
                   bgcolor: neutralLight,
-                  width: "150px",
                   borderRadius: "0.25rem",
                   p: "0.25rem 1rem",
                   "& .MuiSvgIcon-root": {
@@ -184,12 +174,15 @@ const Navbar = () => {
                 }}
                 input={<InputBase />}
               >
-                <MenuItem
-                // value={fullName}
-                >
-                  <Typography>Nagavel</Typography>
+                <MenuItem value={fullName}>
+                  <Typography>{fullName}</Typography>
                 </MenuItem>
-                <MenuItem onClick={() => dispatch(setLogout())}>
+                <MenuItem
+                  onClick={() => {
+                    dispatch(setLogout());
+                    navigate("/");
+                  }}
+                >
                   Log Out
                 </MenuItem>
               </Select>
