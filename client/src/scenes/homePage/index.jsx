@@ -14,12 +14,12 @@ const HomePage = () => {
       <Navbar />
       <Box
         width={"100%"}
-        padding={"2rem 6%"}
+        padding={isNonMobileScreen ? "2rem 2%" : "2rem 6%"}
         display={isNonMobileScreen ? "flex" : "block"}
         gap={"0.5rem"}
         justifyContent={"space-between"}
       >
-        <Box flexBasis={isNonMobileScreen ? "26%" : undefined}>
+        <Box flexBasis={isNonMobileScreen ? "25%" : undefined}>
           <UserWidget
             userId={_id}
             picturePath={picturePath}
