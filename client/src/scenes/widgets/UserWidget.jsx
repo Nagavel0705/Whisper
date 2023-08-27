@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import { Box, Divider, Typography } from "@mui/material";
 import {
+  EditOutlined,
   LocationOnOutlined,
   ManageAccountsOutlined,
   WorkOutlineOutlined,
@@ -46,7 +47,6 @@ const UserWidget = ({ userId, picturePath }) => {
     occupation,
     viewedProfile,
     impressions,
-    email,
     friends,
   } = user;
 
@@ -55,11 +55,10 @@ const UserWidget = ({ userId, picturePath }) => {
       {/* FIRST ROW */}
       <FlexBetween
         gap={"0.5rem"}
-        pb={"1.1rem"}
         onClick={() => navigate(`/profile/${userId}`)}
         flexDirection={"column"}
       >
-        <FlexBetween gap={"1rem"}>
+        <FlexBetween gap={"1rem"} mb={"0.5rem"}>
           <UserImage image={picturePath} />
           <Box>
             <Typography
@@ -75,44 +74,36 @@ const UserWidget = ({ userId, picturePath }) => {
             >
               {firstName} {lastName}
             </Typography>
-            <Typography color={medium}> friends</Typography>
+            <Typography color={medium}>{friends.length} friends</Typography>
           </Box>
           <ManageAccountsOutlined />
         </FlexBetween>
 
-        <Divider />
+        <Divider sx={{ width: "100%" }} />
 
         {/* SECOND ROW */}
         <Box p={"1rem 0rem"} display={"flex"} gap={"2rem"}>
-          <Box
-            display={"flex"}
-            alignItems={"center"}
-            gap={"0.5rem"}
-            mb={"0.5rem"}
-          >
+          <Box display={"flex"} alignItems={"center"} gap={"0.5rem"}>
             <LocationOnOutlined fontSize="large" sx={{ color: main }} />
             <Typography color={medium}>{location}</Typography>
           </Box>
-          <Box
-            display={"flex"}
-            alignItems={"center"}
-            gap={"0.5rem"}
-            mb={"0.5rem"}
-          >
+          <Box display={"flex"} alignItems={"center"} gap={"0.5rem"}>
             <WorkOutlineOutlined fontSize="large" sx={{ color: main }} />
             <Typography color={medium}>{occupation}</Typography>
           </Box>
         </Box>
 
+        <Divider sx={{ width: "100%" }} />
+
         {/* THIRD ROW */}
-        <Box p={"1rem 0"}>
-          <FlexBetween mb={"0.5rem"} gap={"0.5rem"}>
+        <Box p={"1rem 0"} width={"100%"}>
+          <FlexBetween mb={"0.5rem"}>
             <Typography color={medium}>Who's viewed your profile</Typography>
             <Typography color={main} fontWeight={"500"}>
               {viewedProfile}
             </Typography>
           </FlexBetween>
-          <FlexBetween mb={"0.5rem"} gap={"0.5rem"}>
+          <FlexBetween>
             <Typography color={medium}>Impressions of your post</Typography>
             <Typography color={main} fontWeight={"500"}>
               {impressions}
@@ -120,8 +111,10 @@ const UserWidget = ({ userId, picturePath }) => {
           </FlexBetween>
         </Box>
 
+        <Divider sx={{ width: "100%" }} />
+
         {/* FOURTH ROW */}
-        <Box p={"1rem 0"}>
+        <Box p={"0.5rem 0"} width={"100%"}>
           <Typography
             fontSize={"1rem"}
             color={main}
@@ -132,8 +125,17 @@ const UserWidget = ({ userId, picturePath }) => {
           </Typography>
           <FlexBetween gap={"1rem"} mb={"0.5rem"}>
             <FlexBetween gap={"1rem"}>
-                <img src="client/public/assets/twitter.png" alt="twitter"/>
+              <img src="../assets/twitter.png" alt="twitter" />
+              <Typography color={main} fontWeight={500}>Twitter</Typography>
             </FlexBetween>
+            <EditOutlined />
+          </FlexBetween>
+          <FlexBetween gap={"1rem"} mb={"0.5rem"}>
+            <FlexBetween gap={"1rem"}>
+              <img src="../assets/linkedin.png" alt="linkedin" /> 
+              <Typography color={main} fontWeight={500}>LinkedIn</Typography>
+            </FlexBetween>
+            <EditOutlined />
           </FlexBetween>
         </Box>
       </FlexBetween>
